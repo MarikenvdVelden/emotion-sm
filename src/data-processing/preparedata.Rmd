@@ -102,6 +102,13 @@ p2 #profiel poltieke achtergrond obv angst
 
 p3 #demografisch profiel obv woede 
 p4 #profiel poltieke achtergrond obv woede
+
+
+p1b #demografisch profiel obv angst (relatief)
+p2b #profiel poltieke achtergrond obv angst (relatief)
+
+p3b #demografisch profiel obv woede (relatief)
+p4b #profiel poltieke achtergrond obv woede (relatief)
 rm(tmp)
 ```
 
@@ -120,6 +127,16 @@ p4 #profiel poltieke achtergrond obv kristalisatie
 
 p5 #profiel poltieke achtergrond obv versteviging
 p6 #profiel poltieke achtergrond obv versteviging
+
+
+p1b #demografisch profiel obv conversie (choice set)
+p2b #profiel poltieke achtergrond obv conversie (choice set)
+
+p3b #profiel poltieke achtergrond obv kristalisatie (choice set)
+p4b #profiel poltieke achtergrond obv kristalisatie (choice set)
+
+p5b #profiel poltieke achtergrond obv versteviging (choice set)
+p6b #profiel poltieke achtergrond obv versteviging (choice set)
 rm(tmp)
 ```
 
@@ -130,6 +147,10 @@ H1: Y = woede/angst, X = sm gebruik
 
 - dynamisch: als je meer sociale media gaat gebruiken, heb je dan een hogere kans om angst te raporteren
 - statisch: voor iedere wave regressie sm gebruik op woede/angst
+
+```{r h1, eval = FAlSE}
+source(here("src/analysis/h1"))
+```
 
 H2: Y = volatiliteit, x = woede/angst
 

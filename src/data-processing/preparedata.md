@@ -152,6 +152,30 @@ p4 #profiel poltieke achtergrond obv woede
 <img src="../../report/figures/descr-emoties-4.png" style="display: block; margin: auto;" />
 
 ``` r
+p1b #demografisch profiel obv angst (relatief)
+```
+
+<img src="../../report/figures/descr-emoties-5.png" style="display: block; margin: auto;" />
+
+``` r
+p2b #profiel poltieke achtergrond obv angst (relatief)
+```
+
+<img src="../../report/figures/descr-emoties-6.png" style="display: block; margin: auto;" />
+
+``` r
+p3b #demografisch profiel obv woede (relatief)
+```
+
+<img src="../../report/figures/descr-emoties-7.png" style="display: block; margin: auto;" />
+
+``` r
+p4b #profiel poltieke achtergrond obv woede (relatief)
+```
+
+<img src="../../report/figures/descr-emoties-8.png" style="display: block; margin: auto;" />
+
+``` r
 rm(tmp)
 ```
 
@@ -198,6 +222,42 @@ p6 #profiel poltieke achtergrond obv versteviging
 ```
 
 <img src="../../report/figures/descr-vol-6.png" style="display: block; margin: auto;" />
+
+``` r
+p1b #demografisch profiel obv conversie (choice set)
+```
+
+<img src="../../report/figures/descr-vol-7.png" style="display: block; margin: auto;" />
+
+``` r
+p2b #profiel poltieke achtergrond obv conversie (choice set)
+```
+
+<img src="../../report/figures/descr-vol-8.png" style="display: block; margin: auto;" />
+
+``` r
+p3b #profiel poltieke achtergrond obv kristalisatie (choice set)
+```
+
+<img src="../../report/figures/descr-vol-9.png" style="display: block; margin: auto;" />
+
+``` r
+p4b #profiel poltieke achtergrond obv kristalisatie (choice set)
+```
+
+<img src="../../report/figures/descr-vol-10.png" style="display: block; margin: auto;" />
+
+``` r
+p5b #profiel poltieke achtergrond obv versteviging (choice set)
+```
+
+<img src="../../report/figures/descr-vol-11.png" style="display: block; margin: auto;" />
+
+``` r
+p6b #profiel poltieke achtergrond obv versteviging (choice set)
+```
+
+<img src="../../report/figures/descr-vol-12.png" style="display: block; margin: auto;" />
 
 ``` r
 rm(tmp)

@@ -30,6 +30,18 @@ d <- d %>%
                           `Distrust` = 1,
                           .default = 0))
 
+tmp <- d %>% 
+  group_by(id) %>% 
+  summarise(ang_tot = sum(anger),
+            anx_tot = sum(anxiety),
+            n_id = n()) %>% 
+  mutate(anger_tot = round(ang_tot/n_id,2),
+         anxiety_tot = round(anx_tot/n_id,2)) %>% 
+  select(id, anger_tot, anxiety_tot)
+
+d <- left_join(d, tmp, by = "id")
+  
+
 ## Volatileit
 # 1. Conversie-inter: verandering van stemintentie in w1-w4 (veranderen gedurende campage) tussen de "blokken" (sven definieert blokken)
 # 2. Conversie-intra: verandering van stemintentie in w1-w4 (veranderen gedurende campage) binnen het "blok" (sven definieert blokken)
@@ -42,48 +54,58 @@ d <- d %>%
 # 9. Versteviging-choiceset: verandering stemkeuze TK21 naar stemkeuze w5 binnen de choice set obv PTV
 
 vol <- d1 %>% 
-  select(id, E1, vc_w1 = A2b)  %>% 
+  select(id, E1, vc_w1 = A2a)  %>% 
   mutate(block_w1 = recode(vc_w1, #definieeer blok
                         `50Plus` = "Right-Conservative",
                         `BBB` = "Right-Conservative",
-                        `Blanco` = "None",
                         `BVNL` = "Right-Conservative",
                         `CDA` = "Right-Conservative",
-                        `Don't know` = "None",
+                        `D66` = "Left-Progressive",
+                        `PvdD` = "Left-Progressive", 
+                        `GroenLinks` = "Left-Progressive", 
+                        `SP` = "Left-Progressive", 
+                        `ChristenUnie` = "Left-Progressive", 
+                        `D66` = "Left-Progressive", 
+                        `PvdA` = "Left-Progressive", 
+                        `Piratenpartij` = "Left-Progressive", 
+                        `Volt` = "Left-Progressive",
+                        `Denk` = "Left-Progressive",
                         `FVD` = "Right-Conservative",
                         `JA21` = "Right-Conservative",
                         `Lid Omtzigt` = "Right-Conservative",
-                        `Not eligible` = "None",
-                        `Other party` = "None",
                         `PVV` = "Right-Conservative",
                         `SGP` = "Right-Conservative",
                         `VVD` = "Right-Conservative",
-                        `Won't vote` = "None",
-                        .default = "Left-Progressive"))
+                        .default = "None"))
 tmp <- d2 %>% 
-  select(id, vc_w2 = A2b, A4_1:A4_16) %>% 
+  select(id, vc_w2 = A2a, A4_1:A4_16) %>% 
   mutate(block_w2 = recode(vc_w2, #definieeer blok
-                        `50Plus` = "Right-Conservative",
-                        `BBB` = "Right-Conservative",
-                        `Blanco` = "None",
-                        `BVNL` = "Right-Conservative",
-                        `CDA` = "Right-Conservative",
-                        `Don't know` = "None",
-                        `FVD` = "Right-Conservative",
-                        `JA21` = "Right-Conservative",
-                        `Lid Omtzigt` = "Right-Conservative",
-                        `Not eligible` = "None",
-                        `Other party` = "None",
-                        `PVV` = "Right-Conservative",
-                        `SGP` = "Right-Conservative",
-                        `VVD` = "Right-Conservative",
-                        `Won't vote` = "None",
-                        .default = "Left-Progressive"))
+                                  `50Plus` = "Right-Conservative",
+                                  `BBB` = "Right-Conservative",
+                                  `BVNL` = "Right-Conservative",
+                                  `CDA` = "Right-Conservative",
+                                  `D66` = "Left-Progressive",
+                                  `PvdD` = "Left-Progressive", 
+                                  `GroenLinks` = "Left-Progressive", 
+                                  `SP` = "Left-Progressive", 
+                                  `ChristenUnie` = "Left-Progressive", 
+                                  `D66` = "Left-Progressive", 
+                                  `PvdA` = "Left-Progressive", 
+                                  `Piratenpartij` = "Left-Progressive", 
+                                  `Volt` = "Left-Progressive",
+                                  `Denk` = "Left-Progressive",
+                                  `FVD` = "Right-Conservative",
+                                  `JA21` = "Right-Conservative",
+                                  `Lid Omtzigt` = "Right-Conservative",
+                                  `PVV` = "Right-Conservative",
+                                  `SGP` = "Right-Conservative",
+                                  `VVD` = "Right-Conservative",
+                                  .default = "None"))
 
 tst <- tmp %>% #definieeer choice sets
   select(id, A4_1:A4_16) %>% 
   pivot_longer(cols = A4_1:A4_16) %>% 
-  filter(value > 7) %>% 
+  filter(value > 6) %>% 
   mutate(name = recode(name,
                        `A4_1` = "VVD",
                        `A4_2` = "D66",
@@ -119,66 +141,81 @@ tmp <- inner_join(tmp, tst, by = "id") %>%
   select(id, vc_w2, block_w2:c3)
 vol <- inner_join(vol, tmp, by = "id")
 tmp <- d3 %>% 
-  select(id, vc_w3 = A2b)  %>% 
+  select(id, vc_w3 = A2a)  %>% 
   mutate(block_w3 = recode(vc_w3,#definieeer blok
                            `50Plus` = "Right-Conservative",
                            `BBB` = "Right-Conservative",
-                           `Blanco` = "None",
                            `BVNL` = "Right-Conservative",
                            `CDA` = "Right-Conservative",
-                           `Don't know` = "None",
+                           `D66` = "Left-Progressive",
+                           `PvdD` = "Left-Progressive", 
+                           `GroenLinks` = "Left-Progressive", 
+                           `SP` = "Left-Progressive", 
+                           `ChristenUnie` = "Left-Progressive", 
+                           `D66` = "Left-Progressive", 
+                           `PvdA` = "Left-Progressive", 
+                           `Piratenpartij` = "Left-Progressive", 
+                           `Volt` = "Left-Progressive",
+                           `Denk` = "Left-Progressive",
                            `FVD` = "Right-Conservative",
                            `JA21` = "Right-Conservative",
                            `Lid Omtzigt` = "Right-Conservative",
-                           `Not eligible` = "None",
-                           `Other party` = "None",
                            `PVV` = "Right-Conservative",
                            `SGP` = "Right-Conservative",
                            `VVD` = "Right-Conservative",
-                           `Won't vote` = "None",
-                           .default = "Left-Progressive"))
+                           .default = "None"))
 
 vol <- inner_join(vol, tmp, by = "id")
 tmp <- d4 %>% 
-  select(id, vc_w4 = A2b)  %>% 
+  select(id, vc_w4 = A2a)  %>% 
   mutate(block_w4 = recode(vc_w4,#definieeer blok
                            `50Plus` = "Right-Conservative",
                            `BBB` = "Right-Conservative",
-                           `Blanco` = "None",
                            `BVNL` = "Right-Conservative",
                            `CDA` = "Right-Conservative",
-                           `Don't know` = "None",
+                           `D66` = "Left-Progressive",
+                           `PvdD` = "Left-Progressive", 
+                           `GroenLinks` = "Left-Progressive", 
+                           `SP` = "Left-Progressive", 
+                           `ChristenUnie` = "Left-Progressive", 
+                           `D66` = "Left-Progressive", 
+                           `PvdA` = "Left-Progressive", 
+                           `Piratenpartij` = "Left-Progressive", 
+                           `Volt` = "Left-Progressive",
+                           `Denk` = "Left-Progressive",
                            `FVD` = "Right-Conservative",
                            `JA21` = "Right-Conservative",
                            `Lid Omtzigt` = "Right-Conservative",
-                           `Not eligible` = "None",
-                           `Other party` = "None",
                            `PVV` = "Right-Conservative",
                            `SGP` = "Right-Conservative",
                            `VVD` = "Right-Conservative",
-                           `Won't vote` = "None",
-                           .default = "Left-Progressive"))
+                           .default = "None"))
 
 vol <- inner_join(vol, tmp, by = "id") 
 tmp <- d5 %>% #definieeer blok
-  select(id, vc_w5 = A2b) %>% 
+  select(id, vc_w5 = A2a) %>% 
   mutate(block_w5 = recode(vc_w5,
                            `50Plus` = "Right-Conservative",
                            `BBB` = "Right-Conservative",
-                           `Blanco` = "None",
                            `BVNL` = "Right-Conservative",
                            `CDA` = "Right-Conservative",
-                           `Don't know` = "None",
+                           `D66` = "Left-Progressive",
+                           `PvdD` = "Left-Progressive", 
+                           `GroenLinks` = "Left-Progressive", 
+                           `SP` = "Left-Progressive", 
+                           `ChristenUnie` = "Left-Progressive", 
+                           `D66` = "Left-Progressive", 
+                           `PvdA` = "Left-Progressive", 
+                           `Piratenpartij` = "Left-Progressive", 
+                           `Volt` = "Left-Progressive",
+                           `Denk` = "Left-Progressive",
                            `FVD` = "Right-Conservative",
                            `JA21` = "Right-Conservative",
                            `Lid Omtzigt` = "Right-Conservative",
-                           `Not eligible` = "None",
-                           `Other party` = "None",
                            `PVV` = "Right-Conservative",
                            `SGP` = "Right-Conservative",
                            `VVD` = "Right-Conservative",
-                           `Won't vote` = "None",
-                           .default = "Left-Progressive"))
+                           .default = "None"))
 vol <- inner_join(vol, tmp, by = "id") 
 
 vol <- left_join(n, vol, by = "id") %>% #definieeer type volatiliteit
@@ -344,6 +381,7 @@ df <- d %>%
   select(id, wave, weights, #survey info
          smc, sm = I1_5, other_media, #media concumption 
          anger, anxiety, #emotions
+         anger_tot, anxiety_tot,
          conv_cs:cons_inter, #volatility
          age:urbanisation, #controls
          hours_sm = I22,

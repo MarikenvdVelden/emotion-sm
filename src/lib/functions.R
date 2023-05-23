@@ -2,6 +2,8 @@ library(tidyverse)
 library(here)
 library(hrbrthemes)
 library(GGally)
+library(broom.mixed)
+library(lme4)
 
 fig_cols <- yarrr::piratepal(palette = "basel", 
                              trans = .2)
