@@ -98,7 +98,7 @@ h1 <- h1a %>% add_case(h1b) %>%
         legend.title = element_blank()) +
   geom_vline(xintercept = 0, linetype = "dashed", linewidth = .7, color = "lightgray")
 
-h1a <- lm(anxiety_tot ~ smc_tot*media_lit +
+h1a2 <- lm(anxiety_tot ~ smc_tot*media_lit +
             #junkie_tot + tmu_tot + na_tot +
             age + factor(sex) +
             factor(ethnicity) +
@@ -106,7 +106,7 @@ h1a <- lm(anxiety_tot ~ smc_tot*media_lit +
             factor(region) +
             factor(urbanisation), dm)
 
-h1a_e <- interact_plot(model = h1a, pred = smc_tot, 
+h1a_e <- interact_plot(model = h1a2, pred = smc_tot, 
                                  modx = media_lit, interval = F,
                                  data = dm, colors = fig_cols) +
   labs(y = "Voorspelde waarschijnlijkheid dat angst gerapporteerd wordt",
@@ -134,7 +134,7 @@ h1a_e <- interact_plot(model = h1a, pred = smc_tot,
            color = "purple")
 
 
-h1b <- lm(anger_tot ~ smc_tot*media_lit +
+h1b2 <- lm(anger_tot ~ smc_tot*media_lit +
             #junkie_tot + tmu_tot + na_tot +
             age + factor(sex) +
             factor(ethnicity) +
@@ -142,7 +142,7 @@ h1b <- lm(anger_tot ~ smc_tot*media_lit +
             factor(region) +
             factor(urbanisation), dm)
 
-h1b_e <- interact_plot(model = h1b, pred = smc_tot, 
+h1b_e <- interact_plot(model = h1b2, pred = smc_tot, 
                        modx = media_lit, interval = F,
                        data = dm, colors = fig_cols) +
   labs(y = "Voorspelde waarschijnlijkheid dat woede gerapporteerd wordt",

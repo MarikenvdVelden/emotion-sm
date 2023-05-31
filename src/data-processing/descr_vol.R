@@ -275,7 +275,7 @@ tmp <- df %>%
   mutate(Versteviging = "Geen Versteviging",
          Versteviging = ifelse(cons_cs == 1, "Versteviging binnen Choice-Set", Versteviging),
          Versteviging = ifelse(cons_intra == 1, "Versteviging binnen Ideologisch Blok",Versteviging),
-         Kristalisatie = ifelse(cons_inter == 1, "Versteviging tusssen Ideologische Blokken",Versteviging),
+         Versteviging = ifelse(cons_inter == 1, "Versteviging tusssen Ideologische Blokken",Versteviging),
          hours_sm = recode(hours_sm,
                            `Less than 10 minutes` = "Minder dan 10 minuten",
                            `1 to 2 hours` = "1 tot 2 uur",
