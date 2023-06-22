@@ -1,26 +1,20 @@
 Prepare Data
 ================
 
-- <a href="#required-packages--reproducibility"
-  id="toc-required-packages--reproducibility">Required Packages &amp;
-  Reproducibility</a>
-- <a href="#tidy-data" id="toc-tidy-data">Tidy Data</a>
-- <a href="#constructie-van-variabelen"
-  id="toc-constructie-van-variabelen">Constructie van variabelen</a>
-  - <a href="#data" id="toc-data">Data</a>
-  - <a href="#sociale-media-gebruik-i1_5"
-    id="toc-sociale-media-gebruik-i1_5">Sociale Media gebruik (I1_5)</a>
-  - <a href="#emoties" id="toc-emoties">Emoties</a>
-  - <a href="#volatileit" id="toc-volatileit">Volatileit</a>
-- <a href="#data-beschrijving" id="toc-data-beschrijving">Data
-  Beschrijving</a>
-  - <a href="#sociale-media-gebruik" id="toc-sociale-media-gebruik">Sociale
-    Media gebruik</a>
-  - <a href="#emoties-1" id="toc-emoties-1">Emoties</a>
-  - <a href="#volatiliteit" id="toc-volatiliteit">Volatiliteit</a>
-- <a href="#testen-hypothesen" id="toc-testen-hypothesen">Testen
-  Hypothesen</a>
-  - <a href="#regressies" id="toc-regressies">regressies</a>
+- [Required Packages &
+  Reproducibility](#required-packages--reproducibility)
+- [Tidy Data](#tidy-data)
+- [Constructie van variabelen](#constructie-van-variabelen)
+  - [Data](#data)
+  - [Sociale Media gebruik (I1_5)](#sociale-media-gebruik-i1_5)
+  - [Emoties](#emoties)
+  - [Volatileit](#volatileit)
+- [Data Beschrijving](#data-beschrijving)
+  - [Sociale Media gebruik](#sociale-media-gebruik)
+  - [Emoties](#emoties-1)
+  - [Volatiliteit](#volatiliteit)
+- [Testen Hypothesen](#testen-hypothesen)
+  - [regressies](#regressies)
 
 ## Required Packages & Reproducibility
 
@@ -260,7 +254,129 @@ p6b #profiel poltieke achtergrond obv versteviging (choice set)
 <img src="../../report/figures/descr-vol-12.png" style="display: block; margin: auto;" />
 
 ``` r
-rm(tmp)
+kableExtra::kbl(tab, booktabs =T, caption = "\\label{tab:conditions}Hoeveel participanten per volatileitsblok") %>%
+  kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                full_width = F, fixed_thead = T, position = "center") %>%
+  kableExtra::column_spec(1, width = "8cm") %>%
+  kableExtra::column_spec(2, width = "2cm")
+```
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Hoeveel participanten per volatileitsblok
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Volatiliteit
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Conversie binnen Ideologisch Blok
+</td>
+<td style="text-align:right;width: 2cm; ">
+275
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Conversie tusssen Ideologische Blokken
+</td>
+<td style="text-align:right;width: 2cm; ">
+805
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Geen Conversie
+</td>
+<td style="text-align:right;width: 2cm; ">
+7446
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Conversie binnen Choice-Set
+</td>
+<td style="text-align:right;width: 2cm; ">
+805
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Geen Kristalisatie
+</td>
+<td style="text-align:right;width: 2cm; ">
+8086
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Kristalisatie binnen Ideologisch Blok
+</td>
+<td style="text-align:right;width: 2cm; ">
+210
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Kristalisatie tusssen Ideologische Blokken
+</td>
+<td style="text-align:right;width: 2cm; ">
+230
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Kristalisatie binnen Choice-Set
+</td>
+<td style="text-align:right;width: 2cm; ">
+210
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Geen Versteviging
+</td>
+<td style="text-align:right;width: 2cm; ">
+7241
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Versteviging binnen Ideologisch Blok
+</td>
+<td style="text-align:right;width: 2cm; ">
+515
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Versteviging tusssen Ideologische Blokken
+</td>
+<td style="text-align:right;width: 2cm; ">
+770
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8cm; ">
+Versteviging binnen Choice-Set
+</td>
+<td style="text-align:right;width: 2cm; ">
+515
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+rm(tmp, tab)
 ```
 
 # Testen Hypothesen

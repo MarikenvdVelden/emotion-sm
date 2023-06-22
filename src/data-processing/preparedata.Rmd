@@ -137,7 +137,14 @@ p4b #profiel poltieke achtergrond obv kristalisatie (choice set)
 
 p5b #profiel poltieke achtergrond obv versteviging (choice set)
 p6b #profiel poltieke achtergrond obv versteviging (choice set)
-rm(tmp)
+
+kableExtra::kbl(tab, booktabs =T, caption = "\\label{tab:conditions}Hoeveel participanten per volatileitsblok") %>%
+  kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                full_width = F, fixed_thead = T, position = "center") %>%
+  kableExtra::column_spec(1, width = "8cm") %>%
+  kableExtra::column_spec(2, width = "2cm")
+rm(tmp, tab)
+
 ```
 
 # Testen Hypothesen
@@ -180,7 +187,6 @@ H2: Y = volatiliteit, x = woede/angst
 ```{r "h2", fig.width=10, fig.height=6}
 source(here("src/analysis/h2.R"))
 h2 #effect van angst/woede op volatiliteit
-
 
 kableExtra::kbl(h2a)
 kableExtra::kbl(h2b)

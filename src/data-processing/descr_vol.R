@@ -609,3 +609,67 @@ p6b <- ggbivariate(tmp,
   theme(legend.title = element_blank(),
         legend.position = "top",
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+tab <- df %>%
+  mutate(Volatiliteit = "Geen Conversie",
+         Volatiliteit = ifelse(conv_cs == 1, "Conversie binnen Choice-Set", Volatiliteit),
+         Volatiliteit = ifelse(conv_inter == 1, "Conversie binnen Ideologisch Blok",Volatiliteit),
+         Volatiliteit = ifelse(conv_intra == 1, "Conversie tusssen Ideologische Blokken",Volatiliteit)) %>% 
+  group_by(Volatiliteit) %>% 
+  reframe(n = n()) 
+
+tmp <- df %>% 
+  mutate(Volatiliteit = "Geen Conversie",
+         Volatiliteit = ifelse(conv_cs == 1, "Conversie binnen Choice-Set", Volatiliteit)) %>% 
+  group_by(Volatiliteit) %>% 
+  reframe(n = n()) %>% 
+  filter(Volatiliteit == "Conversie binnen Choice-Set")
+
+tab <- tab %>% 
+  add_case(tmp)
+
+tmp <- df %>%
+  mutate(Volatiliteit = "Geen Kristalisatie",
+         Volatiliteit = ifelse(cristal_cs == 1, "Kristalisatie binnen Choice-Set", Volatiliteit),
+         Volatiliteit = ifelse(cristal_intra == 1, "Kristalisatie binnen Ideologisch Blok",Volatiliteit),
+         Volatiliteit = ifelse(cristal_inter == 1, "Kristalisatie tusssen Ideologische Blokken",Volatiliteit)) %>% 
+  group_by(Volatiliteit) %>% 
+  reframe(n = n()) 
+
+tab <- tab %>% 
+  add_case(tmp)
+
+tmp <- df %>% 
+  mutate(Volatiliteit = "Geen Kristalisatie",
+         Volatiliteit = ifelse(cristal_cs == 1, "Kristalisatie binnen Choice-Set", Volatiliteit)) %>% 
+  group_by(Volatiliteit) %>% 
+  reframe(n = n()) %>% 
+  filter(Volatiliteit == "Kristalisatie binnen Choice-Set")
+
+tab <- tab %>% 
+  add_case(tmp)
+
+tmp <- df %>%
+  mutate(Volatiliteit = "Geen Versteviging",
+         Volatiliteit = ifelse(cons_cs == 1, "Versteviging binnen Choice-Set", Volatiliteit),
+         Volatiliteit = ifelse(cons_intra == 1, "Versteviging binnen Ideologisch Blok",Volatiliteit),
+         Volatiliteit = ifelse(cons_inter == 1, "Versteviging tusssen Ideologische Blokken",Volatiliteit)) %>% 
+  group_by(Volatiliteit) %>% 
+  reframe(n = n()) 
+
+tab <- tab %>% 
+  add_case(tmp)
+
+tmp <- df %>% 
+  mutate(Volatiliteit = "Geen Versteviging",
+         Volatiliteit = ifelse(cons_cs == 1, "Versteviging binnen Choice-Set", Volatiliteit)) %>% 
+  group_by(Volatiliteit) %>% 
+  reframe(n = n()) %>% 
+  filter(Volatiliteit == "Versteviging binnen Choice-Set")
+
+tab <- tab %>% 
+  add_case(tmp)
+
+
+
