@@ -36,7 +36,50 @@ dm <- dm %>%
   filter(wave == "wave 4")
 
 ## Angst
-h3a <- lm(conv_cs ~ anxiety_tot*smc_tot +
+h3a <- broom::tidy(lm(conv_cs ~ anxiety_tot*smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3a",
+         emotie = "Anxiety",
+         dv = "Conversion",
+         id = "Choice-Set")
+
+
+tmp <- broom::tidy(lm(conv_intra ~ anxiety_tot*smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3a",
+         emotie = "Anxiety",
+         dv = "Conversion",
+         id = "Intra-Block")
+
+h3a <- h3a %>% 
+  add_case(tmp)
+
+tmp <- broom::tidy(lm(conv_inter ~ anxiety_tot*smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm))%>% 
+  mutate(hyp = "Dutch Study - H3a",
+         emotie = "Anxiety",
+         dv = "Conversion",
+         id = "Inter-Block")
+
+h3a <- h3a %>% 
+  add_case(tmp)
+
+tmp <- lm(conv_inter ~ anxiety_tot*smc_tot +
             age + factor(sex) +
             factor(ethnicity) +
             factor(education) +
@@ -44,47 +87,30 @@ h3a <- lm(conv_cs ~ anxiety_tot*smc_tot +
             factor(urbanisation) +
             media_lit, dm)
 
-
-h3a <- lm(conv_intra ~ anxiety_tot*smc_tot +
-            age + factor(sex) +
-            factor(ethnicity) +
-            factor(education) +
-            factor(region) +
-            factor(urbanisation) +
-            media_lit, dm)
-
-h3a <- lm(conv_inter ~ anxiety_tot*smc_tot +
-            age + factor(sex) +
-            factor(ethnicity) +
-            factor(education) +
-            factor(region) +
-            factor(urbanisation) +
-            media_lit, dm)
-
-h3a_1 <- interact_plot(model = h3a, pred = anxiety_tot, 
+h3a_1 <- interact_plot(model = tmp, pred = anxiety_tot, 
               modx = smc_tot, interval = F,
               data = dm, colors = fig_cols) +
-  labs(y = "Voorspelde waarschijnlijkheid voor conversie inter-blok",
-       x = "Mate van angst \n (0 = niet angstig, 1 = zeer angstig") +
+  labs(y = "Predicted probabilty of inter-block conversion",
+       x = "Anxiety \n (0 = not anxious, 1 = very anxious") +
   theme_ipsum() +
   theme(legend.position = "none") +
 geom_curve(
   aes(x = .5, y = .036, xend = .8, yend = .0387),
   arrow = arrow(length = unit(0.03, "npc")),
   color = fig_cols[2]) +
-  annotate("text", x = .8, y = .04, label = "gemiddelde Sociale \n Media nieuwsgebruiker",
+  ggplot2::annotate("text", x = .8, y = .04, label = "Mean Social \n Media News Users",
            color = fig_cols[2]) +
 geom_curve(
   aes(x = .1, y = .0395, xend = .27, yend = .025),
   arrow = arrow(length = unit(0.03, "npc")),
   color = fig_cols[1]) +
-  annotate("text", x = .45, y = .025, label = "1 standaard deviatie onder \n gemiddelde Sociale \n Media nieuwsgebruiker",
+  ggplot2::annotate("text", x = .45, y = .025, label = "-1 SD",
            color = fig_cols[1]) +
   geom_curve(
     aes(x = .125, y = .0356, xend = .37, yend = .041),
     arrow = arrow(length = unit(0.03, "npc")),
     color = fig_cols[8]) +
-  annotate("text", x = .45, y = .043, label = "1 standaard deviatie boven \n gemiddelde Sociale \n Media nieuwsgebruiker",
+  ggplot2::annotate("text", x = .45, y = .043, label = "+1 SD",
            color = fig_cols[8])
 
 dm <- df %>% 
@@ -123,7 +149,69 @@ dm <- dm %>%
   mutate(media_lit = replace_na(media_lit, mean(media_lit, na.rm=T)),
          smc = factor(smc))
 
-h3a <- lm(cristal_cs ~ anxiety_tot*smc_tot +
+tmp <- broom::tidy(lm(cristal_cs ~ anxiety_tot*smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3a",
+         emotie = "Anxiety",
+         dv = "Cristalization",
+         id = "Choice-Set")
+
+h3a <- h3a %>% 
+  add_case(tmp)
+
+
+tmp <- broom::tidy(lm(cristal_intra ~ anxiety_tot*smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3a",
+         emotie = "Anxiety",
+         dv = "Cristalization",
+         id = "Intra-Block")
+
+h3a <- h3a %>% 
+  add_case(tmp)
+
+
+tmp <- broom::tidy(lm(cristal_inter ~ anxiety_tot*smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3a",
+         emotie = "Anxiety",
+         dv = "Cristalization",
+         id = "Inter-Block")
+
+h3a <- h3a %>% 
+  add_case(tmp)
+
+tmp <- broom::tidy(lm(cons_cs ~ anxiety_tot*smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3a",
+         emotie = "Anxiety",
+         dv = "Consolidation",
+         id = "Choice-Set")
+
+h3a <- h3a %>% 
+  add_case(tmp)
+
+tmp <- lm(cons_cs ~ anxiety_tot*smc_tot +
             age + factor(sex) +
             factor(ethnicity) +
             factor(education) +
@@ -131,74 +219,63 @@ h3a <- lm(cristal_cs ~ anxiety_tot*smc_tot +
             factor(urbanisation) +
             media_lit, dm)
 
-
-h3a <- lm(cristal_intra ~ anxiety_tot*smc +
-            age + factor(sex) +
-            factor(ethnicity) +
-            factor(education) +
-            factor(region) +
-            factor(urbanisation) +
-            media_lit, dm)
-
-
-h3a <- lm(cristal_inter ~ anxiety_tot*smc_tot +
-            age + factor(sex) +
-            factor(ethnicity) +
-            factor(education) +
-            factor(region) +
-            factor(urbanisation) +
-            media_lit, dm)
-
-h3a <- lm(cons_cs ~ anxiety_tot*smc_tot +
-            age + factor(sex) +
-            factor(ethnicity) +
-            factor(education) +
-            factor(region) +
-            factor(urbanisation) +
-            media_lit, dm)
-
-h3a_2 <- interact_plot(model = h3a, pred = anxiety_tot, 
+h3a_2 <- interact_plot(model = tmp, pred = anxiety_tot, 
               modx = smc_tot, interval = F,
               data = dm, colors = fig_cols) +
-  labs(y = "Voorspelde waarschijnlijkheid voor versteviging choice-set",
-       x = "Mate van angst \n (0 = niet angstig, 1 = zeer angstig") +
+  labs(y = "Predicted probabilty of coonsolidation choice-set",
+       x = "Anxiety \n (0 = not anxious, 1 = very anxious") +
   theme_ipsum() +
   theme(legend.position = "none") +
   geom_curve(
     aes(x = .5, y = .058, xend = .8, yend = .0387),
     arrow = arrow(length = unit(0.03, "npc")),
     color = fig_cols[2]) +
-  annotate("text", x = .91, y = .038, label = "gemiddelde Sociale \n Media nieuwsgebruiker",
-           color = fig_cols[2]) +
+  ggplot2::annotate("text", x = .8, y = .04, label = "Mean Social \n Media News Users",
+                    color = fig_cols[2]) +
   geom_curve(
-    aes(x = .1, y = .065, xend = .45, yend = .07),
+    aes(x = .1, y = .0395, xend = .27, yend = .025),
     arrow = arrow(length = unit(0.03, "npc")),
     color = fig_cols[1]) +
-  annotate("text", x = .45, y = .075, label = "1 standaard deviatie boven \n gemiddelde Sociale Media nieuwsgebruiker",
-           color = fig_cols[1]) +
+  ggplot2::annotate("text", x = .45, y = .025, label = "-1 SD",
+                    color = fig_cols[1]) +
   geom_curve(
-    aes(x = .125, y = .0338, xend = .37, yend = .025),
+    aes(x = .125, y = .0356, xend = .37, yend = .041),
     arrow = arrow(length = unit(0.03, "npc")),
     color = fig_cols[8]) +
-  annotate("text", x = .55, y = .028, label = "1 standaard deviatie onder  gemiddelde Sociale \n Media nieuwsgebruiker",
-           color = fig_cols[8])
+  ggplot2::annotate("text", x = .45, y = .043, label = "+1 SD",
+                    color = fig_cols[8])
 
-
-h3a <- lm(cons_intra ~ anxiety_tot*smc_tot +
+tmp <- broom::tidy(lm(cons_intra ~ anxiety_tot*smc_tot +
             age + factor(sex) +
             factor(ethnicity) +
             factor(education) +
             factor(region) +
             factor(urbanisation) +
-            media_lit, dm)
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3a",
+         emotie = "Anxiety",
+         dv = "Consolidation",
+         id = "Intra-Block")
 
-h3a <- lm(cons_inter ~ anxiety_tot*smc_tot +
+h3a <- h3a %>% 
+  add_case(tmp)
+
+
+tmp <- broom::tidy(lm(cons_inter ~ anxiety_tot*smc_tot +
             age + factor(sex) +
             factor(ethnicity) +
             factor(education) +
             factor(region) +
             factor(urbanisation) +
-            media_lit, dm)
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3a",
+         emotie = "Anxiety",
+         dv = "Consolidation",
+         id = "Inter-Block")
+
+h3a <- h3a %>% 
+  add_case(tmp)
+
 
 ## Woede
 dm <- df %>% 
@@ -239,7 +316,49 @@ dm <- dm %>%
   filter(wave == "wave 4")
 
 
-h3b <- lm(conv_cs ~ anger_tot * smc_tot +
+h3b <-broom::tidy(lm(conv_cs ~ anger_tot * smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3b",
+         emotie = "Anger",
+         dv = "Conversion",
+         id = "Choice-Set")
+
+tmp <- broom::tidy(lm(conv_intra ~ anger_tot * smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3b",
+         emotie = "Anger",
+         dv = "Conversion",
+         id = "Intra-Block")
+
+h3b <- h3b %>% 
+  add_case(tmp)
+
+tmp <- broom::tidy(lm(conv_inter ~ anger_tot * smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3b",
+         emotie = "Anger",
+         dv = "Conversion",
+         id = "Inter-Block")
+
+h3b <- h3b %>% 
+  add_case(tmp)
+
+tmp <- lm(conv_inter ~ anger_tot * smc_tot +
             age + factor(sex) +
             factor(ethnicity) +
             factor(education) +
@@ -247,48 +366,31 @@ h3b <- lm(conv_cs ~ anger_tot * smc_tot +
             factor(urbanisation) +
             media_lit, dm)
 
-h3b <- lm(conv_intra ~ anger_tot * smc_tot +
-            age + factor(sex) +
-            factor(ethnicity) +
-            factor(education) +
-            factor(region) +
-            factor(urbanisation) +
-            media_lit, dm)
-
-h3b <- lm(conv_inter ~ anger_tot * smc_tot +
-            age + factor(sex) +
-            factor(ethnicity) +
-            factor(education) +
-            factor(region) +
-            factor(urbanisation) +
-            media_lit, dm)
-
-h3b_1 <- interact_plot(model = h3b, pred = anger_tot, 
+h3b_1 <- interact_plot(model = tmp, pred = anger_tot, 
                        modx = smc_tot, interval = F,
                        data = dm, colors = fig_cols) +
-  labs(y = "Voorspelde waarschijnlijkheid voor conversie inter-blok",
-       x = "Mate van woede \n (0 = niet woedend, 1 = zeer woedend") +
+  labs(y = "Predicted probability of conversion inter-block",
+       x = "Anger \n (0 = not angry, 1 = very angry") +
   theme_ipsum() +
   theme(legend.position = "bottom") +
   geom_curve(
     aes(x = .45, y = .034, xend = .53, yend = .022),
     arrow = arrow(length = unit(0.03, "npc")),
     color = fig_cols[1]) +
-  annotate("text", x = .7, y = .022, label = "1 standaard deviatie onder \n gemiddelde Sociale Media nieuwsgebruiker",
-           color = fig_cols[1]) +
+  ggplot2::annotate("text", x = .8, y = .04, label = "Mean Social \n Media News Users",
+                    color = fig_cols[2]) +
   geom_curve(
-    aes(x = .05, y = .042, xend = .125, yend = .03),
+    aes(x = .1, y = .0395, xend = .27, yend = .025),
     arrow = arrow(length = unit(0.03, "npc")),
-    color = fig_cols[2]) +
-  annotate("text", x = .25, y = .03, label = "gemiddelde Sociale \n Media nieuwsgebruiker",
-           color = fig_cols[2]) +
+    color = fig_cols[1]) +
+  ggplot2::annotate("text", x = .45, y = .025, label = "-1 SD",
+                    color = fig_cols[1]) +
   geom_curve(
-    aes(x = .1, y = .04, xend = .45, yend = .0435),
+    aes(x = .125, y = .0356, xend = .37, yend = .041),
     arrow = arrow(length = unit(0.03, "npc")),
     color = fig_cols[8]) +
-  annotate("text", x = .45, y = .045, label = "1 standaard deviatie boven \n gemiddelde Sociale Media nieuwsgebruiker",
-           color = fig_cols[8]) 
-
+  ggplot2::annotate("text", x = .45, y = .043, label = "+1 SD",
+                    color = fig_cols[8])
 
 dm <- df %>% 
   filter(wave == "wave 5") %>% 
@@ -326,51 +428,125 @@ dm <- dm %>%
   mutate(media_lit = replace_na(media_lit, mean(media_lit, na.rm=T)),
          smc = factor(smc))
 
-h3b <- lm(cristal_cs ~ anger_tot * smc_tot +
+tmp <- broom::tidy(lm(cristal_cs ~ anger_tot * smc_tot +
             age + factor(sex) +
             factor(ethnicity) +
             factor(education) +
             factor(region) +
             factor(urbanisation) +
-            media_lit, dm)
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3b",
+         emotie = "Anger",
+         dv = "Cristalization",
+         id = "Choice-Set")
 
-h3b <- lm(cristal_intra ~ anger_tot * smc_tot +
-            age + factor(sex) +
-            factor(ethnicity) +
-            factor(education) +
-            factor(region) +
-            factor(urbanisation) +
-            media_lit, dm)
+h3b <- h3b %>% 
+  add_case(tmp)
 
-h3b <- lm(cristal_inter ~ anger_tot * smc_tot +
+tmp <- broom::tidy(lm(cristal_intra ~ anger_tot * smc_tot +
             age + factor(sex) +
             factor(ethnicity) +
             factor(education) +
             factor(region) +
             factor(urbanisation) +
-            media_lit, dm)
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3b",
+         emotie = "Anger",
+         dv = "Cristalization",
+         id = "Intra-Block")
 
-h3b <- lm(cons_cs ~ anger_tot * smc_tot +
-            age + factor(sex) +
-            factor(ethnicity) +
-            factor(education) +
-            factor(region) +
-            factor(urbanisation) +
-            media_lit, dm)
+h3b <- h3b %>% 
+  add_case(tmp)
 
-h3b <- lm(cons_intra ~ anger_tot * smc_tot +
+tmp <- broom::tidy(lm(cristal_inter ~ anger_tot * smc_tot +
             age + factor(sex) +
             factor(ethnicity) +
             factor(education) +
             factor(region) +
             factor(urbanisation) +
-            media_lit, dm)
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3b",
+         emotie = "Anger",
+         dv = "Cristalization",
+         id = "Inter-Block")
 
-h3b <- lm(cons_inter ~ anger_tot * smc_tot +
+h3b <- h3b %>% 
+  add_case(tmp)
+
+tmp <- broom::tidy(lm(cons_cs ~ anger_tot * smc_tot +
             age + factor(sex) +
             factor(ethnicity) +
             factor(education) +
             factor(region) +
             factor(urbanisation) +
-            media_lit, dm)
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3b",
+         emotie = "Anger",
+         dv = "Consolidation",
+         id = "Choice-Set")
+
+h3b <- h3b %>% 
+  add_case(tmp)
+
+tmp <- broom::tidy(lm(cons_intra ~ anger_tot * smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3b",
+         emotie = "Anger",
+         dv = "Consolidation",
+         id = "Intra-Block")
+
+h3b <- h3b %>% 
+  add_case(tmp)
+
+tmp <- broom::tidy(lm(cons_inter ~ anger_tot * smc_tot +
+            age + factor(sex) +
+            factor(ethnicity) +
+            factor(education) +
+            factor(region) +
+            factor(urbanisation) +
+            media_lit, dm)) %>% 
+  mutate(hyp = "Dutch Study - H3b",
+         emotie = "Anger",
+         dv = "Consolidation",
+         id = "Inter-Block")
+
+h3b <- h3b %>% 
+  add_case(tmp)
+
+h3 <- h3a %>% 
+  add_case(h3b) %>% 
+  filter(term %in% c("anxiety_tot", "anger_tot",
+                     "smc_tot",
+                     "anxiety_tot:smc_tot",
+                     "anger_tot:smc_tot")) %>% 
+  mutate(term = recode(term,
+                       `anger_tot` = "Political Sentiment",
+                       `anxiety_tot` = "Political Sentiment",
+                       `smc_tot` = "Social Media News Use",
+                       `anxiety_tot:smc_tot` = "Interaction",
+                       `anger_tot:smc_tot` = "Interaction"),
+         term = factor(term,
+                       levels = c("Interaction",
+                                  "Social Media News Use", 
+                                  "Political Sentiment")),
+         upper = (estimate + (1.56*std.error)),
+         lower = (estimate - (1.56*std.error))) %>% 
+  ggplot(aes(x = estimate, y = term,
+             xmin = lower, xmax = upper,
+             color = id)) +
+  geom_point(position = position_dodge(.5)) +
+  geom_errorbar(width = 0, position = position_dodge(.5)) +
+  theme_ipsum() +
+  labs(x = "Interaction Effect of Political Sentiment and Social Media News Use on Volatility \n \n Analyses are controled for demographic variables: \n gender, age, education, ethnicity, region and media literacy",
+       y = "") +
+  scale_color_manual(values = fig_cols) +
+  facet_grid(dv~emotie) +
+  theme(legend.position = "bottom",
+        legend.title = element_blank()) +
+  geom_vline(xintercept = 0, linetype = "dashed", linewidth = .7, color = "lightgray")
 

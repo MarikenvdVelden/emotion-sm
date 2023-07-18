@@ -1,0 +1,100 @@
+---
+title: 'Prepare Data - S1'
+author: 
+output: 
+  github_document:
+    toc: yes
+always_allow_html: true
+editor_options: 
+  
+  chunk_output_type: console
+---
+
+```{r "setup", include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+                      fig.align = "center",
+                      fig.path=('../../report/figures/'))
+library(printr)
+options(digits = 2)
+library(rmarkdown)
+```
+
+## Required Packages &amp; Reproducibility
+```{r "env", message=FALSE, warning=F}
+rm(list=ls())
+source(here::here("src/lib/functions.R"))
+#renv::snapshot()
+```
+
+## Tidy Data
+```{r "get & clean data", results="hide"}
+source(here("src/data-processing/clean_eves.R"))
+```
+
+# Construction of variabeles
+
+## Sociale Media Usage (I1_5) 
+Categories
+
+1. social media higher than average & other media higher than average (news junkies)
+2. social media higher than average & other media lower than average (SM news users)
+3. social media lower than average & other media higher than average (traditional news users)
+4. social media lower than average & other media lower than average (news avoiders)
+
+## Political Sentiment
+1. Anxiety (0/1)
+2. Anger is constructed by respondents answering either Loathing or Distrust (0/1)
+
+
+## Volatility
+1. Inter-block: change between vote choice and vote intention between the "blocks"
+2. Intra-block: change between vote choice and vote intention within the "block"
+3. choiceset: hange between vote choice and vote intention  within choice set based on PTV
+
+```{r "operationalization"}
+source(here("src/data-processing/party_harmonisation.R"))
+source(here("src/data-processing/operationalization_S1.R"))
+save(d1, file = here("data/intermediate/cleaned_eves.RData"))
+```
+
+# Data Description
+
+## Sociale Media Use
+Who is in which category?
+
+```{r "descr-sm-s1", fig.width=10, fig.height=15}
+source(here("src/data-processing/descr_sm_s1.R"))
+p1 
+```
+
+```{r "descr-sm-s1-2", fig.width=10, fig.height=10}
+p2
+rm(tmp, p1, p2, countries)
+```
+
+## Political Sentiment
+Wich people experience what political sentiment?
+
+```{r "descr-emoties-s1", fig.width=10, fig.height=15}
+source(here("src/data-processing/descr_emotion_s1.R"))
+p1 #demografisch profiel obv woede 
+p2 #demografisch profiel obv angst
+p3 #political sentiment accross europe
+
+rm(p1, p2, p3, tmp, fig_cols2)
+```
+
+## Volatility
+Which people are in what category? (for all types of volatility choice-set is overlapping with inter- or intra-block)
+
+```{r "descr-vol-s1", fig.width=10, fig.height=15}
+source(here("src/data-processing/descr_vol_s1.R"))
+p1a #demografisch profiel obv intra /inter
+p1b# #demografisch profielobv cs
+```
+
+```{r "descr-vol-s1-2", fig.width=10, fig.height=8}
+p2  #volatiliteit door europa
+
+rm(p1a, p1b, p2, countries, tmp)
+```

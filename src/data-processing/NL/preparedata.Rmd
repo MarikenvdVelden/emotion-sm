@@ -76,7 +76,7 @@ Typen:
 
 
 ```{r "operationalization"}
-source(here("src/data-processing/operationalization.R"))
+source(here("src/data-processing/operationalization_S2.R"))
 save(df, file = here("data/intermediate/cleaned_data_allwaves.RData"))
 ```
 
@@ -137,7 +137,14 @@ p4b #profiel poltieke achtergrond obv kristalisatie (choice set)
 
 p5b #profiel poltieke achtergrond obv versteviging (choice set)
 p6b #profiel poltieke achtergrond obv versteviging (choice set)
-rm(tmp)
+
+kableExtra::kbl(tab, booktabs =T, caption = "\\label{tab:conditions}Hoeveel participanten per volatileitsblok") %>%
+  kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                full_width = F, fixed_thead = T, position = "center") %>%
+  kableExtra::column_spec(1, width = "8cm") %>%
+  kableExtra::column_spec(2, width = "2cm")
+rm(tmp, tab)
+
 ```
 
 # Testen Hypothesen
@@ -159,6 +166,9 @@ h1b_e #effect van social media use op woede gemodereerd door mediageletterdheid
 h1c_e #effect van social media use op angst gemodereerd door uur op social media
 h1d_e #effect van social media use op woede gemodereerd door uur op social media
 
+kableExtra::kbl(h1a)
+kableExtra::kbl(h1b)
+
 rm(dm, h1, h1a, h1b, h1c, h1d, h1a_e, h1b_e, h1c_e, h1d_e, tmp)
 ```
 
@@ -177,6 +187,9 @@ H2: Y = volatiliteit, x = woede/angst
 ```{r "h2", fig.width=10, fig.height=6}
 source(here("src/analysis/h2.R"))
 h2 #effect van angst/woede op volatiliteit
+
+kableExtra::kbl(h2a)
+kableExtra::kbl(h2b)
 ```
  
 H3: moderatie: sociale media * emotie op volatiliteit
@@ -208,8 +221,3 @@ h3a_1 #de voorspelde waarschijnlijkheid op volatilieit gaat omhoog naar mate men
 h3b_1 #de voorspelde waarschijnlijkheid op volatilieit blijft min of meer gelijk naar mate men meer angst rapporteert voor de groep bovenmatige sociale media nieuwsgebruikers, voor de andere groupen gaat de voorspelde waarschijnlijkheid op volatilieit omlaag naar mate men meer angst rapporteert 
 ```
 
-
-Discuss Mediation 
-
-- use SEM (lavaan) or multilevel frameworks (lme4). You can set up the different paths just as you would normally, but account for stability in within-person variance
-- Use random-effect within-between model

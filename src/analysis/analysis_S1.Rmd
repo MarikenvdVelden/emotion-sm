@@ -1,0 +1,82 @@
+---
+title: 'Analyses - S1'
+author: 
+output: 
+  github_document:
+    toc: yes
+always_allow_html: true
+editor_options: 
+  
+  chunk_output_type: console
+---
+
+```{r "setup", include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+                      fig.align = "center",
+                      fig.path=('../../report/figures/'))
+library(printr)
+options(digits = 2)
+library(rmarkdown)
+```
+
+## Required Packages &amp; Reproducibility
+```{r "env", message=FALSE, warning=F}
+rm(list=ls())
+source(here::here("src/lib/functions.R"))
+#renv::snapshot()
+```
+
+```{r "data"}
+load(here("data/intermediate/cleaned_eves.RData"))
+```
+
+# Testen Hypothesen
+
+## regressies
+H1: Y = woede/angst, X = sm gebruik
+
+```{r "h1-s1", fig.width=8, fig.height=8}
+source(here("src/analysis/h1-s1.R"))
+h1_2 #effect of social media use on anxiety/anger
+
+#kableExtra::kbl(h1a)
+#kableExtra::kbl(h1b)
+```
+
+```{r "h1-s1-2", fig.width=12, fig.height=12}
+h1#effect of social media use on all emotions
+
+rm(h1, h1_2, h1a, h1b, h1c, h1d, h1e, h1f, h1g, h1h, h1i, h1j, h1k, h1l, tmp)
+```
+
+H2: Y = volatiliteit, x = woede/angst
+
+```{r "h2-s1", fig.width=8, fig.height=8}
+source(here("src/analysis/h2-s1.R"))
+h2_1 #effect van angst/woede op volatiliteit
+
+#kableExtra::kbl(h2a)
+#kableExtra::kbl(h2b)
+```
+ 
+```{r "h2-s1-2", fig.width=12, fig.height=12}
+h2#effect of  all emotions on volatillity
+
+rm(h2, h2_1, h2a, h2b, h2c, h2d, h2e, h2f, h2g, h2h, h2i, h2j, h2k, h2l, tmp)
+```
+
+
+```{r "h3-s1", fig.width=8, fig.height=8, eval = F, echo = F}
+source(here("src/analysis/h3-s1.R")) #2 voorbeeld visualisaties, aangezien niets significant is
+h3_1
+#effecten van angst/woede*smc op volatiliteit
+#h3a_1 #de voorspelde waarschijnlijkheid op volatilieit gaat omhoog naar mate men meer angst rapporteert voor de groep bovenmatige sociale media nieuwsgebruikers, voor de andere groupen gaat de voorspelde waarschijnlijkheid op volatilieit omlaag naar mate men meer angst rapporteert 
+#h3b_1 #de voorspelde waarschijnlijkheid op volatilieit blijft min of meer gelijk naar mate men meer angst rapporteert voor de groep bovenmatige sociale media nieuwsgebruikers, voor de andere groupen gaat de voorspelde waarschijnlijkheid op volatilieit omlaag naar mate men meer angst rapporteert 
+```
+
+```{r "h3-s1-2", fig.width=12, fig.height=12, eval = F, echo = F}
+h3#effect of  all emotions on volatillity
+
+rm(h3, h3_1, h3a, h3b, h3c, h3d, h3e, h3f, h3g, h3h, h3i, h3j, h3k, h3l, tmp)
+```
+

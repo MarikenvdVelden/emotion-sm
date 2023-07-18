@@ -1,0 +1,72 @@
+---
+title: 'Analyses - S2'
+author: 
+output: 
+  github_document:
+    toc: yes
+always_allow_html: true
+editor_options: 
+  
+  chunk_output_type: console
+---
+
+```{r "setup", include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+                      fig.align = "center",
+                      fig.path=('../../report/figures/'))
+library(printr)
+options(digits = 2)
+library(rmarkdown)
+```
+
+## Required Packages &amp; Reproducibility
+```{r "env", message=FALSE, warning=F}
+rm(list=ls())
+source(here::here("src/lib/functions.R"))
+#renv::snapshot()
+```
+
+```{r "data"}
+load(here("data/intermediate/cleaned_data_allwaves.RData"))
+```
+
+# Testen Hypothesen
+
+## regressies
+H1: Y = woede/angst, X = sm gebruik
+
+```{r "h1-s2", fig.width=15, fig.height=8}
+source(here("src/analysis/h1_s2.R"))
+h1 #effect van social media use op angst/woede
+
+#source(here("src/analysis/explor_h1_s2.R"))
+#h1a_e #effect van social media use op angst gemodereerd door mediageletterdheid
+#h1b_e #effect van social media use op woede gemodereerd door mediageletterdheid
+#h1c_e #effect van social media use op angst gemodereerd door uur op social media#h1d_e #effect van social media use op woede gemodereerd door uur op social media
+
+#kableExtra::kbl(h1a)
+#kableExtra::kbl(h1b)
+
+rm(dm, h1, h1a, h1b, tmp)
+#rm(h1c, h1d, h1a_e, h1b_e, h1c_e, h1d_e, tmp)
+```
+
+H2: Y = volatiliteit, x = woede/angst
+
+```{r "h2-s2", fig.width=10, fig.height=8}
+source(here("src/analysis/h2_s2.R"))
+h2 #effect van angst/woede op volatiliteit
+
+#kableExtra::kbl(h2a)
+#kableExtra::kbl(h2b)
+```
+ 
+
+```{r "h3-s2", fig.width=10, fig.height=6, eval = F, echo = F}
+#source(here("src/analysis/h3_s2.R")) #2 voorbeeld visualisaties, aangezien niets significant is
+#h3
+#effecten van angst/woede*smc op volatiliteit
+#h3a_1 #de voorspelde waarschijnlijkheid op volatilieit gaat omhoog naar mate men meer angst rapporteert voor de groep bovenmatige sociale media nieuwsgebruikers, voor de andere groupen gaat de voorspelde waarschijnlijkheid op volatilieit omlaag naar mate men meer angst rapporteert 
+#h3b_1 #de voorspelde waarschijnlijkheid op volatilieit blijft min of meer gelijk naar mate men meer angst rapporteert voor de groep bovenmatige sociale media nieuwsgebruikers, voor de andere groupen gaat de voorspelde waarschijnlijkheid op volatilieit omlaag naar mate men meer angst rapporteert 
+```
+

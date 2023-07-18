@@ -1,0 +1,142 @@
+---
+title: 'Prepare Data - S2'
+author: 
+output: 
+  github_document:
+    toc: yes
+always_allow_html: true
+editor_options: 
+  
+  chunk_output_type: console
+---
+
+```{r "setup", include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+                      fig.align = "center",
+                      fig.path=('../../report/figures/'))
+library(printr)
+options(digits = 2)
+library(rmarkdown)
+```
+
+## Required Packages &amp; Reproducibility
+```{r "env", message=FALSE, warning=F}
+rm(list=ls())
+source(here::here("src/lib/functions.R"))
+#renv::snapshot()
+```
+
+## Tidy Data
+```{r "get & clean data", results="hide"}
+source(here("src/data-processing/get_data.R"))
+```
+
+
+# Construction of variabeles
+## Data
+Filter data for resspondents that partipated `=< 3`.
+```{r "filter"}
+n <- d %>% 
+  group_by(id) %>% 
+  count() %>% 
+  filter(n>=3 & n<6) %>% 
+  ungroup() 
+
+d <- left_join(n, d, by = "id") %>% 
+  select(-n)
+```
+
+## Sociale Media Usage (I1_5) 
+Categories
+
+1. social media higher than average & other media higher than average (news junkies)
+2. social media higher than average & other media lower than average (SM news users)
+3. social media lower than average & other media higher than average (traditional news users)
+4. social media lower than average & other media lower than average (news avoiders)
+
+## Political Sentiment
+1. Anxiety (0/1)
+2. Anger is constructed by respondents answering either Loathing or Distrust (0/1)
+
+
+## Volatility
+Types:
+
+1. Conversion-inter: changing intention to vote w1-w4 (change during campaign ) between the "blocks" 
+2. Conversion-intra: changing intention to vote w1-w4 (change during campaign ) within the "block" 
+3. Conversion-choiceset: changing intention to vote w1-w4 (change during campaign ) within choice set based on PTV
+4. Cristalization-inter: change between vote choice (w5) and last vote intention between the "blocks"
+5. Cristalization-intra: change between vote choice (w5) and last vote intention within the "block"
+6. Cristalization-choiceset: change between vote choice (w5) and last vote intention within choice set based on PTV
+7. Consolidation-inter: change between vote choice 2021 and 2023 between the "blocks"
+8. Consolidation-intra: change between vote choice 2021 and 2023 within the "block"
+9. Consolidation-choiceset: change between vote choice 2021 and 2023 within choice set based on PTV
+
+```{r "operationalization"}
+source(here("src/data-processing/operationalization_S2.R"))
+save(df, file = here("data/intermediate/cleaned_data_allwaves.RData"))
+rm(d)
+```
+
+# Data Description
+
+## Sociale Media Use
+Who is in which category?
+
+```{r "descr-sm-s2", fig.width=10, fig.height=15}
+source(here("src/data-processing/descr_sm_s2.R"))
+p1 
+p2 
+p3
+
+k1 <- p3
+rm(p1, p2, p3, tmp)
+```
+
+## Political Sentiment
+Wich people experience what political sentiment?
+
+```{r "descr-emoties-s2", fig.width=6, fig.height=6}
+source(here("src/data-processing/descr_emotion_s2.R"))
+p1
+k2 <- as.list(p1)
+rm(p1, tmp)
+```
+
+## Volatility
+Which people are in what category? (for all types of volatilitym choice-set is overlapping with inter- or intra-block)
+
+```{r "descr-vol-s2", fig.width=10, fig.height=15}
+source(here("src/data-processing/descr_vol_s2.R"))
+p1 #demografisch profiel obv conversie 
+p1b #demografisch profiel obv conversie (choice set)
+p2 #profiel poltieke achtergrond obv conversie
+p2b #profiel poltieke achtergrond obv conversie (choice set)
+
+p3 #profiel poltieke achtergrond obv kristalisatie
+p3b #profiel poltieke achtergrond obv kristalisatie (choice set)
+p4 #profiel poltieke achtergrond obv kristalisatie
+p4b #profiel poltieke achtergrond obv kristalisatie (choice set)
+
+p5 #profiel poltieke achtergrond obv versteviging
+p5b #profiel poltieke achtergrond obv versteviging (choice set)
+p6 #profiel poltieke achtergrond obv versteviging
+p6b #profiel poltieke achtergrond obv versteviging (choice set)
+
+p7
+k3 <- p7
+
+kableExtra::kbl(tab, booktabs =T, caption = "\\label{tab:conditions} # Respondents per Volatility Category") %>%
+  kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                full_width = F, fixed_thead = T, position = "center") %>%
+  kableExtra::column_spec(1, width = "8cm") %>%
+  kableExtra::column_spec(2, width = "2cm")
+
+rm(p1, p2, p3, p4, p5, p6, p7, p1b, p2b, p3b, p4b, p5b, p6b, tmp, tab)
+```
+
+```{r "descr", fig.width=15, fig.height=8}
+k1 + as.list(k2) + k3
+
+rm(k1, k2, k3)
+```
