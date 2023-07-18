@@ -1,0 +1,306 @@
+---
+output: 
+  stevetemplates::article:
+    fig_caption: true
+    #extra_dependencies: ["float"]
+urlcolor: black
+linkcolor: black
+header-includes:
+   - \usepackage{floatrow}
+   - \floatsetup[figure]{capposition=top}
+   - \floatsetup[table]{capposition=top}
+   - \usepackage{booktabs}
+   - \usepackage{longtable}
+   - \usepackage{array}
+   - \usepackage{multirow}
+   - \usepackage{wrapfig}
+   - \usepackage{float}
+   - \usepackage{colortbl}
+   - \usepackage{pdflscape}
+   - \usepackage{tabu}
+   - \usepackage[para,online,flushleft]{threeparttable}
+   - \usepackage{threeparttablex}
+   - \usepackage[normalem]{ulem}
+   - \usepackage{makecell}
+   - \usepackage{xcolor}
+   - \usepackage{hyperref}
+   - \usepackage{array}   
+   - \usepackage{caption}
+   - \usepackage{graphicx}
+   - \usepackage{epstopdf}
+   - \usepackage{siunitx}
+   - \usepackage{hhline}
+   - \usepackage{calc}
+   - \usepackage{tabularx}
+   - \usepackage{fontawesome}
+   - \usepackage{amsthm}
+   - \newtheorem{hypo}{Hypothesis}
+   - \usepackage{setspace}
+biblio-style: apsr
+title: "Clicks, Sentiments, and Political Shifts: Analyzing the Correlates of Social Media News Use, Emotions, and Electoral Volatility"
+author:
+- name: Mariken A.C.G. van der Velden
+- affiliation: Dep. of Communciation Science, Vrije Universiteit Amsterdam
+thanks: "Replication files are available on the author's Github account (LINK)"
+anonymous: FALSE
+abstract: "Tests experimental work in real life setting using 2 high powered studies -- one comparative (14) countries, and one panel study. Highlight importance of comparative and real life studies -- not always replication of experimental effects"
+keywords: "Emotions, Social Media News Use, Electoral Volatility, Comparative Study, Panel Study"
+geometry: margin=1in
+mainfont: cochineal
+fontsize: 12pt
+params:
+  anonymous: ""
+endnote: no
+pandocparas: TRUE
+sansitup: FALSE
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message=FALSE, warning=FALSE,
+                      fig.pos = "h", out.extra = "")
+options(kableExtra.latex.load_packages = FALSE)
+options(scipen = 1, digits = 2)
+source(here::here("src/lib/functions.R"))
+# Uncomment below if you want code captions
+# oldSource <- knitr::knit_hooks$get("source")
+# knitr::knit_hooks$set(source = function(x, options) {
+#   x <- oldSource(x, options)
+#   x <- ifelse(!is.null(options$code.cap), paste0(x, "\\captionof{chunk}{", options$code.cap,"}"), x)
+#   ifelse(!is.null(options$ref), paste0(x, "\\label{", options$ref,"}"), x)
+# })
+# Add `chunkcaption: TRUE` to YAML as well.
+```
+
+# Introduction
+
+Volatility is on the rise in Western democracies (Drummond, 2006; Van der Meer et al., 2015). 
+Media consumption is one of the causes, as it has been shown to influence both voting behavior (De Vreese & Semetko, 2004) and volatility (Van der Meer et al., 2015; Geers et al., 2019). 
+This research aims to understand the increase in volatility by examining changes in media use. 
+While traditional offline media like television, radio, and newspapers used to play a major role in influencing voting behavior (Choi & Becker, 1987; Jacobson, 2015), the significance of online media has grown. 
+Although the use of traditional offline news sources remains stable or even declines, online news consumption continues to grow annually (Reuters, 2022).
+Particularly with social media, the effects on news consumers differ from other media. 
+Social media users are exposed to different forms of news more frequently, both consciously and unconsciously, compared to users of traditional media.
+Algorithms and the increasing freedom of choice on social media platforms result in users encountering more selective news, less exposure to opposing views, and an increasing presence of niche news media or even fake news that aligns with their worldview (Del Vicario et al., 2016; Borgesius et al., 2016; Eady et al., 2019).
+
+The rise of social media usage has a significant impact on users' emotions, particularly negative emotions, which play a crucial role in the political decision-making process. 
+Emotions greatly influence how we process information and the type of information we seek, with different emotions leading to distinct behavioral effects (Webster & Albertson, 2022). 
+Fear, for instance, drives individuals to search for new information while placing less emphasis on source credibility (Gadarian & Albertson, 2014), whereas anger leads to biased information processing (Suhay & Erisen, 2018).
+Existing literature primarily focuses on fear and anger when discussing negative emotions (Webster & Albertson, 2022), which will also be the focal point of this study. 
+To understand the influence of social media on voting behavior, it is essential to examine its impact on negative emotions. 
+Political parties deliberately attempt to evoke negative emotions in voters as a strategy to attract their support (Hameleers et al., 2017; Aalberg et al., 2018). 
+This strategic approach is effective given the significant role emotions play in party selection (Garry, 2014; Hooghe & Dassonneville, 2018; Bertsou, 2019; Nai, 2021; Webster & Albertson, 2022).
+
+While previous studies on media use and volatility primarily examined traditional offline media forms (De Vreese & Semetko, 2004; Van der Meer et al., 2015; Geers et al., 2019), this research will specifically focus on social media as a news source. 
+Exploring the connection between social media and volatility is essential to understand the effects of media use accurately. 
+Interestingly, the rise in volatility coincides with the increasing use of social media (Hoekstra et al., 2023), offering an opportunity to expand our understanding of media use and volatility by incorporating social media knowledge. 
+Moreover, there is currently a lack of literature linking the relationships between social media, emotions, and volatility. 
+This study aims to analyze the interplay between media behavior, volatility, and emotions to determine whether these relationships are separate or interconnected. 
+The unique aspect of this study lies in measuring emotions in the same number of waves as volatility, whereas previous research primarily focused on volatility alone. 
+Additionally, this study presents unique scientific opportunities by examining multiple waves of volatility within the same panel, building upon previous studies (Walgrave et al., 2010; Van der Meer et al., 2015).
+
+Understanding the causes of volatility is crucial due to its impact on the governability of democracies (Van der Meer et al., 2015). 
+As the effects of social media and emotions on volatility remain largely unexplored, this research contributes valuable insights to stakeholders.
+Political parties and policymakers can benefit from the findings to inform their election campaign strategies, while voters can make more informed choices by gaining a deeper understanding of the influences on voting behavior. 
+By shedding light on this topic, this research enhances knowledge and promotes autonomy in decision-making for all involved parties.
+
+# Clicks, Sentiments, and Political Shifts
+
+According to a global study conducted by the journalism research institute Reuters (2022), traditional offline sources like television and radio are declining in popularity as news sources, social media remains stable in its usage. 
+The report also highlights that social media users tend to prioritize news articles that align with their personal interests, indicating a higher degree of individual choice in news consumption. 
+Various researchers have observed that selective exposure to news is more prevalent on social media compared to other media platforms (Borgesius et al., 2016; Van Aelst et al., 2017; Welbers & Opgenhaffen, 2018). 
+Social media users are more likely to encounter alternative news sources, which can range from niche media outlets to fake news and conspiracy theories (Van Aelst et al., 2017). 
+Given these findings, this study specifically focuses on social media users to examine the unique dynamics associated with their news consumption patterns.
+
+Previous research has examined the impact of (social) media on users' emotions, particularly in relation to political news. 
+Strömback (2005) highlighted that media often portrays politics as a competitive arena, emphasizing the negative aspects of opposing parties. 
+This framing can evoke more negative emotions among individuals, such as anger and fear. 
+The competitive portrayal of democracy increases anger due to the emphasis on party differences, and fear due to potential losses if another party's policies are implemented (Webster & Albertson, 2022). 
+Additionally, focusing on the competitive nature of politics contributes to heightened distrust in the political system (Van Aelst et al., 2017).
+Particularly on social media, coverage of political struggles between parties and politicians is expanding, and parties themselves increasingly utilize social media for negative campaign strategies against their opponents (Gross & Johnson, 2016; Marcos-García et al., 2021).
+
+Social media users are increasingly exposed to news content in a selective manner, consciously or unconsciously. 
+This selective exposure often leads to the formation of filter bubbles and echo chambers. 
+Filter bubbles are personalized environments shaped by a user's social media behavior, while echo chambers are environments where one's own opinions are predominantly encountered and reinforced (Del Vicario et al., 2016; Borgesius et al., 2016; Eady et al., 2019). 
+According to research conducted by Del Vicario et al. (2016), this trend has been associated with a higher likelihood of experiencing negative emotions. 
+The study revealed that individuals who encountered more echo chambers exhibited greater negative responses, suggesting a link between exposure to such environments and negative emotions.
+
+It is worth noting that social media can elicit positive emotions in addition to negative ones (Kramer et al., 2014).
+However, most studies indicate that social media usage is predominantly associated with negative emotions (Del Vicario et al., 2016; Lin et al., 2017; Webster & Albertson, 2022). 
+Given these findings, coupled with the prevalence of negative and competition-focused content on social media, as well as the selective exposure to news experienced by users, it is expected that individuals who frequently rely on social media as a news source will experience more negative emotions in this study. 
+It is important to clarify that this expectation is based on a correlation rather than a direct causal effect, as the study will employ a survey methodology rather than experimental testing, which may involve other contributing factors in respondents' self-reporting. 
+Nonetheless, the cited studies provide sufficient insights to anticipate a connection between social media usage and an increase in experiencing negative emotions.
+
+> **Social Media News Use hypothesis** (*H1*): Individuals who rely on social media as their primary news source will experience more negative political sentiment than individuals who do not consume news or obtain news through alternative media channels.
+
+In addition to investigating the potential impact of news coverage through social media on eliciting negative emotions, this study will explore the consequences of these negative emotions, particularly in relation to voting behavior. 
+Both fear and anger have been found to influence people's voting behavior. 
+Fear prompts individuals to seek out new information and readily accept the information they encounter (Gadarian & Albertson, 2014; Webster & Albertson, 2022). 
+Anxious voters tend to base their voting decisions primarily on the specific issues at hand rather than party or government affiliations (Parker & Isbell, 2010; Garry, 2014; Webster & Albertson, 2022). 
+On the other hand, anger is also relevant to voting behavior and is often studied alongside fear. 
+When experiencing anger, individuals tend to process information more swiftly and with bias (Suhay & Erisen, 2018; Webster & Albertson, 2022). 
+While anxious voters focus on issue-based attitudes, angry voters tend to base their choices more on attitudes towards parties or the government (Parker & Isbell, 2010; Garry, 2014; Webster & Albertson, 2022).
+
+Numerous studies have established the influence of emotions on voting behavior, but this study specifically examines the impact of emotions on volatility. Volatility refers to the likelihood of sudden changes (Cambridge Dictionary, 2023), and in the context of this study, it pertains to political volatility.
+Political volatility is defined as the shift in party preference within an electorate (Crewe, 1985; Geers et al., 2019). 
+Voters who alter their voting intention or actual vote compared to their previous stance are classified as volatile voters (Van der Meer et al., 2015).
+
+There are three distinct phases that encompass voter volatility, as originally described by Lazarsfeld et al. (1948). 
+The first phase is conversion, which involves switching from one political party to another in response to campaign information. 
+The subsequent phase is crystallization, as Lazarsfeld et al. defined it, where a voter's latent support for a party solidifies into an actual vote in response to campaign information. 
+Lastly, the reinforcement phase examines the impact of reinforcing factors on the initial voting decision. 
+While the conversion phase relates to voting intention, the latter two phases primarily focus on voting behavior. 
+Intention serves as an indicator of a person's willingness to engage in a particular behavior and the level of effort they are willing to exert. 
+Higher intention to perform a behavior increases the likelihood of actually carrying it out (Ajzen, 1991). 
+Therefore, voting intention provides insights into eventual voting behavior.
+During the conversion phase, voting intention is formed and reinforced, while crystallization and reinforcement determine whether this intention translates into actual voting behavior. 
+This study will encompass both voting intention and actual voting behavior. 
+The conversion phase will be regarded as voting intention, while crystallization and reinforcement will be considered as voting behavior.
+These phases pertain to micro-level volatility, focusing on the volatility experienced by individual voters rather than broader shifts across the entire electorate.
+
+The literature highlights several negative consequences associated with volatility, particularly in relation to the governability of governments, which becomes more challenging due to difficulties in forming coalitions (Van der Meer et al., 2015). 
+In the Netherlands, the last two coalition formations in the Lower House broke records in terms of the time taken to reach an agreement (Van Balen et al., 2023). 
+At the end of 2022, the polls indicated that a majority coalition would require the involvement of at least five parties (EenVandaag, 2022), further straining the governability of the government (Van der Meer et al., 2015).
+This trend is not exclusive to the Netherlands, as Belgium, with its multiparty system, experiences higher voter volatility compared to many other countries, leading to similar challenges in coalition formation (Walgrave et al., 2010).
+Given the significant level of volatility in multiparty systems like that of the Netherlands and its consequential effects, this study aims to explore one of the possible causes underlying this phenomenon.
+
+One contributing factor to volatility is the extensive deliberation individuals undertake in making informed electoral choices. 
+This heightened consideration leads to a decrease in party commitment and subsequently increases volatility (Dalton, 1984). 
+Specifically, anxious individuals, who actively seek more information, are expected to exhibit higher levels of volatility. 
+Similarly, anger is anticipated to contribute to increased volatility. 
+News coverage highlighting party competition, such as polls and rivalries between politicians, has been found to intensify volatility among individuals (Geers et al., 2019). 
+Given that individuals driven by anger base their voting decisions on such information, volatility is expected to be heightened. 
+While the aforementioned studies do not differentiate between various forms and stages of volatility, this study assumes that emotions positively influence all forms of volatility across different stages.
+Based on these premises, the following hypothesis is derived:
+
+> **Negative Political Sentiment hypothesis** (*H2*): Individuals who feel more negative political sentiment individuals exhibit more volatile voting behavior.
+
+# Data, Measurements & Methods
+
+## Comparative Study
+
+***Data.***
+
+- EVES 2018; 14 countries (Austria, Belgium (Flanders, Wallonia), Denmark, France, Germany, Hungary, Italy, Poland, Portugal, Romania, Spain, Sweden, the Netherlands); `N = 68,102`
+- Collected by KiesKompas
+
+***Measurement.***
+
+- Media Consumption: 
+1. news junkies: social media higher than average & other media higher than average
+2. SM news users: social media higher than average & other media lower than average
+3. traditional news user": social media lower than average & other media higher than average (traditional news users)
+4. news avoiders: social media lower than average & other media lower than average
+
+- Political Sentiment ("anger", "anxiety", "fear", "disgust", "depressed", "sad", "confident","enthusiasm", "happy", "hope", "proud", "relieved"): on 11 point scale; `0` is low, `10` is high
+
+- Volatility
+1. Choice Set: change between vote choice last elections and vote intentions within choice set based on PTV (`value >= 7`)
+2. Intra Block: change between vote choice last elections and vote intentions within ideological blocks, determined by RILE score of CMP, as it measures both economic and cultural parts of dimensions
+3. Inter Block: Consolidation-inter: change between vote choice last elections and vote intentions between ideological blocks, determined by RILE score of CMP, as it measures both economic and cultural parts of dimensions
+
+***Method.***
+
+- Pooled analysis: multilevel model
+- Country analyses: OLS
+
+## Panel Study
+
+***Data.***
+
+- VU Election Studies 2023 (van der Velden 2023); 5 wave panel study, `N = 8,526`
+- Collected by KiesKompas
+
+***Measurement.***
+- Media Consumption
+1. news junkies: social media higher than average & other media higher than average
+2. SM news users: social media higher than average & other media lower than average
+3. traditional news user": social media lower than average & other media higher than average (traditional news users)
+4. news avoiders: social media lower than average & other media lower than average
+
+- Political Sentiment: asked which of 8 sentiments politics makes you feel (Anxiety, Aversion, Boredom, Distrust, Hope, Interest, Respect, Enthusiasm) each wave, we use the relative political sentiment felt over all the waves; e.g. value of `.8` means that in four out of 5 times, that political sentiment was selected.
+
+- Volatility
+1. Conversion-inter: changing intention to vote w1-w4 (change during campaign ) between the "blocks" 
+2. Conversion-intra: changing intention to vote w1-w4 (change during campaign ) within the "block" 
+3. Conversion-choiceset: changing intention to vote w1-w4 (change during campaign ) within choice set based on PTV
+4. Cristalization-inter: change between vote choice (w5) and last vote intention between the "blocks"
+5. Cristalization-intra: change between vote choice (w5) and last vote intention within the "block"
+6. Cristalization-choiceset: change between vote choice (w5) and last vote intention within choice set based on PTV
+7. Consolidation-inter: change between vote choice 2021 and 2023 between the "blocks"
+8. Consolidation-intra: change between vote choice 2021 and 2023 within the "block"
+9. Consolidation-choiceset: change between vote choice 2021 and 2023 within choice set based on PTV
+
+***Method.***
+
+# Correlates of Social Media News Use, Emotions, and Electoral Volatility
+
+## Comparative Study
+
+***Descriptive Analyses.***
+
+````{=tex}
+\begin{landscape}
+```{r "s1-descr-emotion", out.height="90%", out.width="90%", fig.align = "center", fig.cap = "\\label{fig:descr-emo-s1} Description Political Sentiment", fig.pos="h"}
+knitr::include_graphics(here("report/figures", "descr-emoties-s1-3.png"))
+```
+\end{landscape}
+````
+
+```{r "s1-descr-sm", out.height="80%", out.width="90%", fig.align = "center", "fig.cap" = "\\label{fig:descr-sm-s1} Description Media Use", fig.pos="h"}
+knitr::include_graphics(here("report/figures", "descr-sm-s1-2-1.png"))
+```
+
+```{r "s1-descr-vol", out.height="60%", out.width="90%", fig.align = 'center', fig.cap = "\\label{fig:descr-vol-s1} Description Volatility", fig.pos="h"}
+knitr::include_graphics(here("report/figures", "descr-vol-s1-2-1.png"))
+```
+
+***Statistical Analyses.***
+````{=tex}
+\begin{landscape}
+```{r "s1-h1", out.width = "95%", out.height = "95%", fig.align = 'center', fig.cap = "\\label{fig:h1-s1} H1 - Comparative Study", fig.pos = "h"}
+knitr::include_graphics(here("report/figures", "h1-s1-2-1.png"))
+```
+\end{landscape}
+````
+
+````{=tex}
+\begin{landscape}
+```{r "s1-h2", out.width = "95%", out.height = "95%", fig.align = 'center', fig.cap = "\\label{fig:h2-s1} H2 - Comparative Study", fig.pos = "h"}
+knitr::include_graphics(here("report/figures", "h2-s1-2-1.png"))
+```
+\end{landscape}
+````
+
+
+## Panel Study
+
+***Descriptive Analyses.***
+
+````{=tex}
+\begin{landscape}
+```{r "descr-s2", out.width = "95%", out.height = "70%", fig.align = 'center', fig.cap = "\\label{fig:descr-s2} Description of Main Variables", fig.pos = "h!"}
+knitr::include_graphics(here("report/figures", "descr-1.png"))
+```
+\end{landscape}
+````
+
+***Statistical Analyses.***
+
+````{=tex}
+\begin{landscape}
+```{r "s2-h1", out.width = "95%", fig.align = 'center', fig.cap = "\\label{fig:h1-s1} H1 - Panel Study", fig.pos="h!"}
+knitr::include_graphics(here("report/figures", "h1-s2-1.png"))
+```
+
+```{r "s2-h2", out.width = "95%", fig.align = 'center', fig.cap = "\\label{fig:h2-s1} H2 - Panel Study", fig.pos="h!"}
+knitr::include_graphics(here("report/figures", "h2-s2-1.png"))
+```
+\end{landscape}
+````
+
+# Conclusion
